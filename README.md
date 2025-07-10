@@ -4,13 +4,13 @@ Benvenuto/a in **nr proget**!
 
 ## Descrizione
 
-Breve descrizione del progetto.  
-(Sostituisci questa sezione con una panoramica delle funzionalità e degli obiettivi del progetto.)
+**nr proget** è un progetto web che consiste in un server dinamico Python basato su Flask che serve una raccolta di articoli in formato HTML. Il server fornisce una semplice API per elencare gli articoli disponibili e serve le pagine HTML degli articoli stessi. È ideale per la pubblicazione e la visualizzazione di contenuti statici con un backend leggero.
 
 ## Tecnologie utilizzate
 
-- Elenco delle principali tecnologie/librerie/framework.
-- (Es: Python, Node.js, React, ecc.)
+- Python 3
+- Flask
+- HTML, CSS, JavaScript (per il frontend)
 
 ## Installazione
 
@@ -20,25 +20,52 @@ Breve descrizione del progetto.
    ```
 2. Accedi alla cartella del progetto:
    ```bash
-   cd nr-proget
+   cd nr-proget/NR\ Progect\ Dinamic\ Python\ Server
    ```
-3. Installa le dipendenze:
+3. (Opzionale) Crea un ambiente virtuale Python:
    ```bash
-   # Esempio per Node.js
-   npm install
-   # Esempio per Python
-   pip install -r requirements.txt
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+4. Installa le dipendenze:
+   ```bash
+   pip install Flask
    ```
 
 ## Utilizzo
 
-Aggiungi qui esempi di utilizzo, comandi principali o come avviare il progetto.
+Per avviare il server Flask, esegui:
 
 ```bash
-# Esempio di comando per avviare il progetto
-npm start
-# oppure
-python main.py
+python app.py [porta]
+```
+
+- `porta` è opzionale, il valore predefinito è 8080.
+- Esempio per avviare sulla porta 5000:
+  ```bash
+  python app.py 5000
+  ```
+
+Una volta avviato, apri il browser e visita:
+
+- `http://127.0.0.1:porta/` per visualizzare la pagina principale con gli articoli.
+- `http://127.0.0.1:porta/api/articles` per ottenere la lista degli articoli in formato JSON.
+- `http://127.0.0.1:porta/Article/<nomefile>` per visualizzare un articolo specifico.
+
+## Struttura del progetto
+
+```
+NR Progect Dinamic Python Server/
+├── app.py                  # Server Flask principale
+├── articles.html           # Pagina principale degli articoli
+├── Article/                # Cartella contenente gli articoli HTML
+│   ├── article1.html
+│   ├── article2.html
+│   └── ...
+├── contact.html            # Pagina di contatto
+├── gallery.html            # Pagina galleria
+├── index.html              # Pagina principale statica
+├── src/                    # Risorse statiche (CSS, JS, immagini, ecc.)
 ```
 
 ## Contribuire
@@ -51,7 +78,7 @@ python main.py
 
 ## Licenza
 
-Specificare la licenza (ad esempio MIT, GPL, ecc.).
+Questo progetto è rilasciato sotto la licenza Creative Commons.
 
 ## Autori
 
