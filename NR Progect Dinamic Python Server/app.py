@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory, render_template_string
+from flask import Flask, jsonify, send_from_directory, render_template_string, request
 import os
 import re
 
@@ -37,12 +37,45 @@ def serve_article_file(filename):
 
 if __name__ == '__main__':
     import sys
+    import threading
+    import requests
+    import time
+
     port = 8080  # qui e dove puoi cambiare la porta predefinita
     if len(sys.argv) > 1:
         try:
             port = int(sys.argv[1])
         except ValueError:
             print(f"Invalid port number '{sys.argv[1]}', using default port {port}")
-    url = f"http://127.0.0.1:{port}"
-    print(f" * Running on {url} (clickable link)")
-    app.run(debug=True, port=port)
+
+    @app.route('/shutdown', methods=['POST'])
+    def shutdown():
+        func = request.environ.get('werkzeug.server.shutdown')
+        if func is None:
+            return "Not running with the Werkzeug Server", 500
+        func()
+        return "Server shutting down..."
+
+    def run_app():
+        url = f"http://127.0.0.1:{port}"
+        print(f" * Running on {url} (clickable link)")
+        app.run(debug=True, port=port, use_reloader=False)
+
+    server_thread = threading.Thread(target=run_app)
+    server_thread.start()
+
+    try:
+        while True:
+            command = input()
+            if command.strip().lower() == 'stop':
+                print("Stopping server...")
+                try:
+                    requests.post(f"http://127.0.0.1:{port}/shutdown")
+                except requests.exceptions.RequestException:
+                    pass
+                print("Server stopped correctly.")
+                break
+    except KeyboardInterrupt:
+        print("Keyboard interrupt received, stopping server...")
+
+    server_thread.join()
