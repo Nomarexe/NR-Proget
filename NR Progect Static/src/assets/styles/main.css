@@ -5,12 +5,13 @@
   --color-primary-dark: #3a7bbf;
   --color-muted: #ccc;
   --color-header-bg: #000000;
-  --color-shadow: rgba(0,0,0,0.5);
+  --color-shadow: rgba(0, 0, 0, 0.5);
   --color-separator: #8868f3;
   --color-separator-opacity: 0.7;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -152,7 +153,8 @@ h1 {
     flex-direction: column;
     padding-top: 1rem;
   }
-  .hero-text, .hero-image {
+  .hero-text,
+  .hero-image {
     min-width: 100%;
     max-width: 100%;
   }
@@ -250,7 +252,7 @@ footer {
   margin: 2rem auto;
   background: linear-gradient(135deg, #8868f3, #3a2a6d, #8868f3);
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-wrap: wrap;
   color: var(--color-text);
