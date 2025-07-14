@@ -56,10 +56,27 @@ if __name__ == '__main__':
         func()
         return "Server shutting down..."
 
+    import socket
+
+    def get_local_ip():
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            # non deve essere raggiungibile
+            s.connect(('10.255.255.255', 1))
+            IP = s.getsockname()[0]
+        except Exception:
+            IP = '127.0.0.1'
+        finally:
+            s.close()
+        return IP
+
     def run_app():
-        url = f"http://127.0.0.1:{port}"
-        print(f" * Running on {url} (clickable link)")
-        app.run(debug=True, port=port, use_reloader=False)
+        local_ip = get_local_ip()
+        url_localhost = f"http://127.0.0.1:{port}" # url per accedere al server tramite localhost
+        url_network = f"http://{local_ip}:{port}" # url per accedere al server tramite la rete
+        print(f" * Running on {url_localhost} (clickable link)") # url per accedere al server tramite localhost
+        print(f" * Also accessible on your network at: {url_network}") # url per accedere al server tramite la rete
+        app.run(debug=False, host='0.0.0.0', port=port, use_reloader=False)  # serve il server con debug disattivato
 
     server_thread = threading.Thread(target=run_app)
     server_thread.start()
