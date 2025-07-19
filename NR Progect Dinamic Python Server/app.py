@@ -6,6 +6,7 @@ app = Flask(__name__, static_folder='')
 
 ARTICLES_DIR = 'Article'
 ARTICLES_HTML = 'articles.html'
+GALLERY_DIR = 'Galleria'  # Folder containing gallery images and videos
 
 def extract_title(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -34,6 +35,24 @@ def list_articles():
 @app.route('/Article/<path:filename>')
 def serve_article_file(filename):
     return send_from_directory(ARTICLES_DIR, filename)
+
+@app.route('/api/gallery')
+def list_gallery_media():
+    try:
+        files = sorted(os.listdir(GALLERY_DIR))
+        # Filter image and video files by common extensions
+        image_extensions = ('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp')
+        video_extensions = ('.mp4', '.webm', '.ogg')
+        media_files = [f for f in files if f.lower().endswith(image_extensions + video_extensions)]
+        # Return URLs relative to server root
+        media_urls = [f"/{GALLERY_DIR}/{media}" for media in media_files]
+        return jsonify(media_urls)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/Galleria/<path:filename>')
+def serve_gallery_file(filename):
+    return send_from_directory(GALLERY_DIR, filename)
 
 if __name__ == '__main__':
     import sys
