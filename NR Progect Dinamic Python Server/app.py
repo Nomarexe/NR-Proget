@@ -6,7 +6,7 @@ app = Flask(__name__, static_folder='')
 
 ARTICLES_DIR = 'Article'
 ARTICLES_HTML = 'articles.html'
-GALLERY_DIR = 'Galleria'  # Folder containing gallery images and videos
+GALLERY_DIR = 'Galleria'  # Cartella contenente immagini e video della galleria
 
 def extract_title(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
